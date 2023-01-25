@@ -3,7 +3,6 @@ import { Input } from "../UI/Input/Input";
 import styled from "styled-components";
 import { useReducer } from "react";
 const inputValueReducer = (state, action) => {
-  console.log(action);
   if (action.type === "changeInputValue") {
     return {
       ...state,
@@ -17,18 +16,14 @@ const inputValueReducer = (state, action) => {
   }
 
 };
-console.log(inputValueReducer);
 export const ToDoForm = ({ onAddTasks }) => {
   // const [inputValue, setInputValue] = useState();
 
   const [inputValueState, dispatchInputValue] = useReducer(inputValueReducer, {
     value: " ",
   });
-  console.log(inputValueState);
-
   const onChageInputReducer = (event) => {
     dispatchInputValue({ type: "changeInputValue", payload: event.target.value });
-    console.log(event.target.value);
   };
   let submitHandlerReducer = () => {
     if (inputValueState.value.trim().length > 0) {

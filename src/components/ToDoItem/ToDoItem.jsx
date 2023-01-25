@@ -1,9 +1,11 @@
+import { useContext } from "react";
 import styled from "styled-components";
+import { ToDoContext } from "../store/ToDoContext";
 import { Button } from "../UI/Button/Button";
-export const ToDoItem = ({ tasks, setTasks, todo, setEditToDo }) => {
-  console.log(tasks);
+export const ToDoItem = ({ todo, setEditToDo }) => {
+  const context = useContext(ToDoContext);
   const completeHandler = () => {
-    const checked = tasks.map((item) => {
+    const checked = context.tasks.map((item) => {
       if (todo.id === item.id) {
         return {
           ...item,
@@ -12,16 +14,16 @@ export const ToDoItem = ({ tasks, setTasks, todo, setEditToDo }) => {
       }
       return item;
     });
-    setTasks(checked);
+    context.setTasks(checked);
   };
-  const editHandler = ({id}) =>{
-  const findToDo = tasks.find((todo)=>todo.id === id)
-  setEditToDo(findToDo)
-}
+  const editHandler = ({ id }) => {
+    const findToDo = context.tasks.find((todo) => todo.id === id);
+    setEditToDo(findToDo);
+  };
   const { text } = todo;
   const deleteHandler = () => {
-    const filteredTodos = tasks.filter((item) => item.id !== todo.id);
-    setTasks(filteredTodos);
+    const filteredTodos = context.tasks.filter((item) => item.id !== todo.id);
+    context.setTasks(filteredTodos);
   };
   return (
     <StyledList>

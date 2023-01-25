@@ -1,10 +1,11 @@
 import { useState } from "react";
+import { ToDoContext } from "./components/store/ToDoContext";
 import { ToDoForm } from "./components/ToDoForm/ToDoForm";
 import { ToDoList } from "./components/ToDoList/ToDoList";
 
 function App() {
   const [tasks, setTasks] = useState([]);
-  const [editToDo, setEditToDo]=useState(null)
+  const [editToDo, setEditToDo] = useState(null);
   const getTasksHandler = (inputValue) => {
     setTasks((prevTasks) => [
       ...prevTasks,
@@ -16,10 +17,14 @@ function App() {
     ]);
   };
   return (
-    <div>
-      <ToDoForm onAddTasks={getTasksHandler} editToDo={editToDo} setEditToDo={setEditToDo} />
-      <ToDoList tasks={tasks} setTasks={setTasks} setEditToDo={setEditToDo}/>
-    </div>
+    <ToDoContext.Provider value={{ tasks, setTasks }}>
+      <ToDoForm
+        onAddTasks={getTasksHandler}
+        editToDo={editToDo}
+        setEditToDo={setEditToDo}
+      />
+      <ToDoList setEditToDo={setEditToDo} />
+    </ToDoContext.Provider>
   );
 }
 
